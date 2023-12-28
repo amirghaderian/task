@@ -1,2 +1,3 @@
-import MapComponent from "./map"
-export {MapComponent}
+import MapComponent from "./map";
+import Dialogs from "./dialog";
+export { MapComponent, Dialogs };
