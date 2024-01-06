@@ -1,7 +1,11 @@
 import ReactEcharts from "echarts-for-react";
-import dataChart from "../services/servers.json"
-const MyChartComponent = () => {
-  console.log(dataChart)
+import dataChart from "../services/servers.json";
+const MyChartComponent = ({ fId }) => {
+  console.log(dataChart);
+  const findID = dataChart.find((item) => {
+    return item.featureId === fId 
+  });
+  console.log(findID)
   const option = {
     xAxis: {
       type: "category",

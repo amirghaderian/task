@@ -20,7 +20,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const Dialogs = ({ isOpen, handleClose, handleClickOpen ,id}) => {
+const Dialogs = ({ isOpen, handleClose, handleClickOpen ,fId}) => {
   return (
     <>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -47,7 +47,7 @@ const Dialogs = ({ isOpen, handleClose, handleClickOpen ,id}) => {
         </IconButton>
 
         {/* <MapComponent /> */}
-        <MyChartComponent Feature={id} />
+        <MyChartComponent fId={fId}/>
 
         <DialogContent dividers>
           <Typography gutterBottom>
