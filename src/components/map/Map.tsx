@@ -96,7 +96,6 @@ const MapComponent = () => {
         // Display a dialog or popup with the feature information
 
         //open dialog
-        console.log(open);
         const featureId = feature.ol_uid;
         const featureCoordinates = feature.getGeometry().getCoordinates();
         const featureProperties = feature.getProperties();
