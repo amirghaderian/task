@@ -16,6 +16,7 @@ const MapComponent = () => {
   const mapContainerRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [FId, setFId] = useState<Number>();
+  const [center,setCenter]=useState([])
   const handleClickOpen = () => {
     setOpen(true);
     console.log(open);
@@ -99,6 +100,7 @@ const MapComponent = () => {
         const featureId = feature.ol_uid;
         const featureCoordinates = feature.getGeometry().getCoordinates();
         const featureProperties = feature.getProperties();
+        setCenter(featureCoordinates)
         // <MyChartComponent/>
         // alert(
         //   `Feature ID: ${featureId}\nCoordinates: ${featureCoordinates}\nProperties: ${JSON.stringify(

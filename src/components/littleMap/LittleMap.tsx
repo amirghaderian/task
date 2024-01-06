@@ -44,7 +44,7 @@ const LittleMap = () => {
         }),
       ],
       view: new View({
-        center: initCenter,
+        center: [5720467.70799008, 4262248.0061709145],
         zoom: 12,
       }),
     });
@@ -83,7 +83,6 @@ const LittleMap = () => {
     });
 
     map.addLayer(vectorLayer);
-
     map.on("click", function (event) {
       const feature = map.forEachFeatureAtPixel(
         event.pixel,

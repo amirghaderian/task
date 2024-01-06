@@ -1,14 +1,11 @@
-import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import MyChartComponent from "../chart/Chart";
-import { useState } from "react";
 import { LittleMap, MapComponent } from "..";
 import { Box } from "@mui/material";
 
@@ -26,6 +23,7 @@ const Dialogs = ({ isOpen, handleClose, handleClickOpen, fId }) => {
     <div className="min-w-[1000px]">
       <BootstrapDialog
         fullWidth
+        maxWidth="lg"
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={isOpen}
