@@ -15,7 +15,7 @@ const MyChartComponent = ({ fId }) => {
     },
     series: [
       {
-        data: dataChart[2].time_series,
+        data: findItem.time_series,
         type: "line",
       },
     ],

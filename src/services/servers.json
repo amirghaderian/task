@@ -2,9 +2,9 @@
   {
     "id": 1,
     "featureId": 24,
-    "location": {
-      "latitude": "40.735659",
-      "longitude": "-73.982374"
+    "location": { 
+      "latitude": "35.70213187527045",
+      "longitude": "51.390607980835355"
     },
     "time_series": [150, 230, 224, 218, 135, 147, 260]
   },
@@ -12,8 +12,8 @@
     "id": 2,
     "featureId": 26,
     "location": {
-      "latitude": "41.735659",
-      "longitude": "-70.982374"
+      "latitude": "35.702323549552034",
+      "longitude": "51.395736364417886"
     },
     "time_series": [120, 130, 114, 100, 330, 124, 200]
   },
@@ -21,53 +21,53 @@
     "id": 3,
     "featureId": 28,
     "location": {
-      "latitude": "45.735659",
-      "longitude": "-60.982374"
+      "latitude": "35.70486319036077",
+      "longitude": "51.39327409651009"
     },
     "time_series": [50, 60, 70, 80, 90, 124, 43]
   },
   {
     "id": 4,
     "featureId": 30,
-    "location": {
-      "latitude": "48.735659",
-      "longitude": "-80.982374"
+    "location": { 
+      "latitude": "35.70823908847428",
+      "longitude": "51.39085474403116"
     },
     "time_series": [123, 321, 43, 12, 54, 34, 130]
   },
   {
     "id": 5,
     "featureId": 32,
-    "location": {
-      "latitude": "55.735659",
-      "longitude": "-70.982374"
+    "location": { 
+      "latitude": "35.703663923350675",
+      "longitude": "51.409035618383726"
     },
     "time_series": [100, 90, 80, 70, 60, 70, 50]
   },
   {
     "id": 6,
     "featureId": 34,
-    "location": {
-      "latitude": "66.735659",
-      "longitude": "-50.982374"
+    "location": { 
+      "latitude": "35.7419407564125",
+      "longitude": "51.506861063755736"
     },
     "time_series": [122, 32, 123, 54, 343, 23, 42]
   },
   {
     "id": 7,
     "featureId": 36,
-    "location": {
-      "latitude": "23.735659",
-      "longitude": "-12.982374"
+    "location": { 
+      "latitude": "35.711482983413845",
+      "longitude": "51.39657801126585"
     },
     "time_series": [90, 100, 90, 95, 110, 112, 120]
   },
   {
     "id": 8,
     "featureId": 38,
-    "location": {
-      "latitude": "25.735659",
-      "longitude": "-6.982374"
+    "location": { 
+      "latitude": "35.715379676125025",
+      "longitude": "51.393580434614954"
     },
     "time_series": [87, 43, 64, 76, 52, 74, 43]
   },
@@ -75,17 +75,17 @@
     "id": 9,
     "featureId": 40,
     "location": {
-      "latitude": "29.735659",
-      "longitude": "2.982374"
+      "latitude": "35.703805894048784",
+      "longitude": "51.35173548954801"
     },
     "time_series": [32, 34, 53, 36, 52, 64, 43]
   },
   {
     "id": 10,
     "featureId": 42,
-    "location": {
-      "latitude": "31.735659",
-      "longitude": "10.982374"
+    "location": {  
+      "latitude": "35.72062808634242",
+      "longitude": "51.38783574399656"
     },
     "time_series": [5, 2, 63, 2, 6, 46, 33]
   }

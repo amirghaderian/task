@@ -44,8 +44,8 @@ const MapComponent = () => {
         }),
       ],
       view: new View({
-        center: [0, 0],
-        zoom: 2,
+        center: [5720467.70799008, 4262248.0061709145],
+        zoom: 12,
       }),
     });
 
@@ -100,17 +100,18 @@ const MapComponent = () => {
         const featureCoordinates = feature.getGeometry().getCoordinates();
         const featureProperties = feature.getProperties();
         // <MyChartComponent/>
-        alert(
-          `Feature ID: ${featureId}\nCoordinates: ${featureCoordinates}\nProperties: ${JSON.stringify(
-            featureProperties
-          )}`
-        );
+        // alert(
+        //   `Feature ID: ${featureId}\nCoordinates: ${featureCoordinates}\nProperties: ${JSON.stringify(
+        //     featureProperties
+        //   )}`
+        // );
         console.log(featureProperties);
         setOpen(true);
         setFId(featureId)
       }
     });
 
+    
     return () => {
       map.setTarget(null);
       document
