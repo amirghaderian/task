@@ -12,7 +12,7 @@ import { Style, Fill, Stroke, Circle } from "ol/style";
 import "../../services/server";
 import data from "../../services/servers.json";
 import { Dialogs } from "..";
-const LittleMap = () => {
+const LittleMap = ({center}) => {
   const mapContainerRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [FId, setFId] = useState<Number>();
@@ -44,7 +44,7 @@ const LittleMap = () => {
         }),
       ],
       view: new View({
-        center: [5720467.70799008, 4262248.0061709145],
+        center: center,
         zoom: 12,
       }),
     });
