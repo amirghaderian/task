@@ -1,11 +1,10 @@
 import ReactEcharts from "echarts-for-react";
 import dataChart from "../../services/servers.json";
 const MyChartComponent = ({ fId }) => {
-  console.log(dataChart);
+  // console.log(dataChart);
   const findItem = dataChart.find((item) => {
-    return item.featureId === Number(fId);
+    return item.id ===fId;
   });
-  console.log(findItem);
   const option = {
     xAxis: {
       type: "category",
@@ -16,7 +15,7 @@ const MyChartComponent = ({ fId }) => {
     },
     series: [
       {
-        data: findItem.time_series,
+        data: findItem?.time_series,
         type: "line",
       },
     ],

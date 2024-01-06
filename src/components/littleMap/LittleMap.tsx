@@ -11,11 +11,13 @@ import { Vector as VectorSource } from "ol/source";
 import { Style, Fill, Stroke, Circle } from "ol/style";
 import "../../services/server";
 import data from "../../services/servers.json";
-import { Dialogs } from "..";
-const LittleMap = ({center}) => {
+import { getUid } from "ol/util";
+import { Dialogs, MyChartComponent } from "..";
+const LittleMap = ({ center, onMapClick }) => {
   const mapContainerRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [FId, setFId] = useState<Number>();
+  const [centerMap, setCenterMap] = useState([]);
   const [initCenter, setInitCenter] = useState([]);
   const handleClickOpen = () => {
     setOpen(true);
@@ -25,6 +27,10 @@ const LittleMap = ({center}) => {
     setOpen(false);
   };
 
+  const handleMapClick = (clickedData) => {
+    console.log(clickedData);
+    
+  };
   useEffect(() => {
     const mapContainerId = `map-${Math.floor(Math.random() * 1000)}`;
 
@@ -45,7 +51,7 @@ const LittleMap = ({center}) => {
       ],
       view: new View({
         center: center,
-        zoom: 12,
+        zoom: 13,
       }),
     });
 
@@ -53,7 +59,7 @@ const LittleMap = ({center}) => {
     const points = data.map((server) => ({
       coordinates: [server.location?.longitude, server.location?.latitude],
       color: "blue",
-      PID: server.id,
+      id: server.id,
     }));
 
     // Create an array of point features
@@ -61,6 +67,8 @@ const LittleMap = ({center}) => {
       const geom = new Point(fromLonLat(point.coordinates));
       const feature = new Feature(geom);
 
+      feature.ol_uid = point.id;
+      
       // Style for the point
       const pointStyle = new Style({
         image: new Circle({
@@ -75,7 +83,6 @@ const LittleMap = ({center}) => {
       return feature;
     });
 
-    // Create a vector layer with the point features
     const vectorLayer = new VectorLayer({
       source: new VectorSource({
         features: pointFeatures,
@@ -92,22 +99,25 @@ const LittleMap = ({center}) => {
       );
 
       if (feature) {
-        // Display a dialog or popup with the feature information
 
-        //open dialog
         const featureId = feature.ol_uid;
         const featureCoordinates = feature.getGeometry().getCoordinates();
         const featureProperties = feature.getProperties();
-        setInitCenter(featureCoordinates)
-        console.log(featureProperties);
+        setInitCenter(featureCoordinates);
         setOpen(true);
-        setFId(featureId);
+        setCenterMap(featureCoordinates);
+        console.log(featureId);
+        handleMapClick(Number(featureId));
+        setFId(Number(featureId));
       }
     });
 
     return () => {
-      map.setTarget(null);
-      document.getElementById("littleMap");
+      const mapContainerElement = document.getElementById("littleMap");
+      if (mapContainerElement && mapContainerRef.current) {
+        map.setTarget(null);
+        mapContainerElement.removeChild(mapContainerRef.current);
+      }
     };
   }, []);
 
@@ -118,12 +128,6 @@ const LittleMap = ({center}) => {
         style={{ width: "100%", height: "400px" }}
         ref={mapContainerRef}
       ></div>
-      <Dialogs
-        isOpen={open}
-        handleClickOpen={handleClickOpen}
-        handleClose={handleClose}
-        fId={FId}
-      />
     </>
   );
 };

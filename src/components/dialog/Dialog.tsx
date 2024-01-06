@@ -6,8 +6,9 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import MyChartComponent from "../chart/Chart";
-import { LittleMap, } from "..";
+import { LittleMap } from "..";
 import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -18,7 +19,15 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const Dialogs = ({ isOpen, handleClose, handleClickOpen, fId ,center}) => {
+const Dialogs = ({ isOpen, handleClose, fId, center }) => {
+  const [id, setId] = useState();
+  useEffect(() => {
+    debugger;
+    setId(fId);
+    console.log("dialog:1111");
+    console.log(id);
+  }, [id,fId]);
+ 
   return (
     <div className="min-w-[1000px]">
       <BootstrapDialog
@@ -47,8 +56,8 @@ const Dialogs = ({ isOpen, handleClose, handleClickOpen, fId ,center}) => {
         >
           <CloseIcon />
         </IconButton>
-        <Box  sx={{display:"flex",justifyContent:"center"}}>
-          <LittleMap  center={center}/>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <LittleMap center={center} />
           <MyChartComponent fId={fId} />
         </Box>
 

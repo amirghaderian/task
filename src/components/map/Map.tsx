@@ -9,7 +9,6 @@ import Feature from "ol/Feature";
 import { Vector as VectorLayer } from "ol/layer";
 import { Vector as VectorSource } from "ol/source";
 import { Style, Fill, Stroke, Circle } from "ol/style";
-import "../../services/server";
 import data from "../../services/servers.json";
 import { Dialogs } from "..";
 const MapComponent = () => {
@@ -54,13 +53,14 @@ const MapComponent = () => {
     const points = data.map((server) => ({
       coordinates: [server.location?.longitude, server.location?.latitude],
       color: "blue",
-      PID: server.id,
+      id: server.id,
     }));
 
     // Create an array of point features
     const pointFeatures = points.map((point) => {
       const geom = new Point(fromLonLat(point.coordinates));
       const feature = new Feature(geom);
+      feature.ol_uid = point.id;
 
       // Style for the point
       const pointStyle = new Style({
@@ -108,7 +108,8 @@ const MapComponent = () => {
         //   )}`
         // );
         setOpen(true);
-        setFId(featureId);
+        console.log(featureProperties);
+        setFId(Number(featureId));
       }
     });
 
