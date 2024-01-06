@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "ol/ol.css";
 import { Map, View } from "ol";
 import TileLayer from "ol/layer/Tile";
@@ -10,18 +10,20 @@ import { Vector as VectorLayer } from "ol/layer";
 import { Vector as VectorSource } from "ol/source";
 import { Style, Fill, Stroke, Circle } from "ol/style";
 import "../../services/server";
-import axios from "axios";
+import data from "../../services/servers.json";
+import { Dialogs } from "..";
 const MapComponent = () => {
   const mapContainerRef = useRef(null);
-  const fetchData = async () => {
-    await axios
-      .get("/api/pointsList")
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err));
+  const [open, setOpen] = useState(false);
+  const [FId, setFId] = useState<Number>();
+  const handleClickOpen = () => {
+    setOpen(true);
+    console.log(open);
   };
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     const mapContainerId = `map-${Math.floor(Math.random() * 1000)}`;
 
@@ -48,10 +50,10 @@ const MapComponent = () => {
     });
 
     // Create an array of points
-    const points = Array.from({ length: 500 }, (_) => ({
-      coordinates: [Math.random() * 360 - 180, Math.random() * 180 - 90],
+    const points = data.map((server) => ({
+      coordinates: [server.location?.longitude, server.location?.latitude],
       color: "blue",
-      PID: Math.round(Math.random()),
+      PID: server.id,
     }));
 
     // Create an array of point features
@@ -92,6 +94,9 @@ const MapComponent = () => {
 
       if (feature) {
         // Display a dialog or popup with the feature information
+
+        //open dialog
+        console.log(open);
         const featureId = feature.ol_uid;
         const featureCoordinates = feature.getGeometry().getCoordinates();
         const featureProperties = feature.getProperties();
@@ -101,6 +106,9 @@ const MapComponent = () => {
             featureProperties
           )}`
         );
+        console.log(featureProperties);
+        setOpen(true);
+        setFId(featureId)
       }
     });
 
@@ -110,14 +118,22 @@ const MapComponent = () => {
         .getElementById("map-container")
         .removeChild(mapContainerRef.current);
     };
-  }, []); // Empty dependency array to run the effect only once
+  }, []);
 
   return (
-    <div
-      id="map-container"
-      style={{ width: "100%", height: "400px" }}
-      ref={mapContainerRef}
-    ></div>
+    <>
+      <div
+        id="map-container"
+        style={{ width: "100%", height: "400px" }}
+        ref={mapContainerRef}
+      ></div>
+      <Dialogs
+        isOpen={open}
+        handleClickOpen={handleClickOpen}
+        handleClose={handleClose}
+        fId={FId}
+      />
+    </>
   );
 };
 

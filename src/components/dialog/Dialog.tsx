@@ -20,16 +20,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const Dialogs = () => {
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+const Dialogs = ({ isOpen, handleClose, handleClickOpen ,id}) => {
   return (
     <>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -38,7 +29,7 @@ const Dialogs = () => {
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
-        open={open}
+        open={isOpen}
         sx={{ width: "100%", height: "100%" }}
       >
         <DialogTitle id="customized-dialog-title">Time Series</DialogTitle>
@@ -55,9 +46,8 @@ const Dialogs = () => {
           <CloseIcon />
         </IconButton>
 
-          {/* <MapComponent /> */}
-          <MyChartComponent />
-     
+        {/* <MapComponent /> */}
+        <MyChartComponent Feature={id} />
 
         <DialogContent dividers>
           <Typography gutterBottom>

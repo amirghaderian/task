@@ -1,6 +1,7 @@
 import ReactEcharts from "echarts-for-react";
-
+import dataChart from "../services/servers.json"
 const MyChartComponent = () => {
+  console.log(dataChart)
   const option = {
     xAxis: {
       type: "category",
@@ -11,7 +12,7 @@ const MyChartComponent = () => {
     },
     series: [
       {
-        data: [150, 230, 224, 218, 135, 147, 260],
+        data: dataChart[2].time_series,
         type: "line",
       },
     ],
