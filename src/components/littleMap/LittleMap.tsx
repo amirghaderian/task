@@ -11,8 +11,6 @@ import { Vector as VectorSource } from "ol/source";
 import { Style, Fill, Stroke, Circle } from "ol/style";
 import "../../services/server";
 import data from "../../services/servers.json";
-import { getUid } from "ol/util";
-import { Dialogs, MyChartComponent } from "..";
 const LittleMap = ({ center, onMapClick }) => {
   const mapContainerRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -28,7 +26,7 @@ const LittleMap = ({ center, onMapClick }) => {
   };
 
   const handleMapClick = (clickedData) => {
-    console.log(clickedData);
+    console.log("jjj",clickedData);
     
   };
   useEffect(() => {

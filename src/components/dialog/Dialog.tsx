@@ -22,7 +22,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 const Dialogs = ({ isOpen, handleClose, fId, center }) => {
   const [id, setId] = useState();
   useEffect(() => {
-    debugger;
     setId(fId);
     console.log("dialog:1111");
     console.log(id);
