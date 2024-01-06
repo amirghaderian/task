@@ -7,7 +7,9 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
+import MyChartComponent from "../sample";
 import { useState } from "react";
+import { MapComponent } from "..";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -37,10 +39,9 @@ const Dialogs = () => {
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
+        sx={{ width: "100%", height: "100%" }}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Modal title
-        </DialogTitle>
+        <DialogTitle id="customized-dialog-title">Time Series</DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -53,21 +54,16 @@ const Dialogs = () => {
         >
           <CloseIcon />
         </IconButton>
+
+          {/* <MapComponent /> */}
+          <MyChartComponent />
+     
+
         <DialogContent dividers>
           <Typography gutterBottom>
             Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
             dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
             ac consectetur ac, vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-            auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-            dui. Donec ullamcorper nulla non metus auctor fringilla.
           </Typography>
         </DialogContent>
         <DialogActions>

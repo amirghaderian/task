@@ -4,7 +4,7 @@ const App = () => {
     <>
       <h1>hiasd</h1>
       <div>
-        {/* <MapComponent /> */}
+        <MapComponent />
         <Dialogs />
         <h1>hiasdfasdfasdfasdf</h1>
       </div>

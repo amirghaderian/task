@@ -80,11 +80,8 @@ const MapComponent = () => {
       }),
     });
 
-    // Add the vector layer to the map
     map.addLayer(vectorLayer);
 
-    // Handle click events on the vector layer
-    // Handle click events on the vector layer
     map.on("click", function (event) {
       const feature = map.forEachFeatureAtPixel(
         event.pixel,
@@ -98,8 +95,8 @@ const MapComponent = () => {
         const featureId = feature.ol_uid;
         const featureCoordinates = feature.getGeometry().getCoordinates();
         const featureProperties = feature.getProperties();
-
-        window.alert(
+        // <MyChartComponent/>
+        alert(
           `Feature ID: ${featureId}\nCoordinates: ${featureCoordinates}\nProperties: ${JSON.stringify(
             featureProperties
           )}`
