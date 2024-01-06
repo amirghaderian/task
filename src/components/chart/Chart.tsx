@@ -1,8 +1,9 @@
 import ReactEcharts from "echarts-for-react";
-import dataChart from "../services/servers.json";
+import dataChart from "../../services/servers.json";
 const MyChartComponent = ({ fId }) => {
   console.log(dataChart);
-  const findItem = dataChart.find((item) => {return (item.featureId===Number(fId))
+  const findItem = dataChart.find((item) => {
+    return item.featureId === Number(fId);
   });
   console.log(findItem);
   const option = {
@@ -21,7 +22,7 @@ const MyChartComponent = ({ fId }) => {
     ],
   };
   return (
-    <ReactEcharts option={option} style={{ height: "400px", width: "100%" }} />
+    <ReactEcharts  option={option} style={{ height: "400px", width: "100%"}} />
   );
 };
 

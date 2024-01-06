@@ -1,3 +1,5 @@
 import MapComponent from "./map";
 import Dialogs from "./dialog";
-export { MapComponent, Dialogs };
+import LittleMap from "./littleMap";
+import MyChartComponent from "./chart";
+export { MapComponent, Dialogs, LittleMap, MyChartComponent };

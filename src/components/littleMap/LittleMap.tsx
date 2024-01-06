@@ -12,10 +12,11 @@ import { Style, Fill, Stroke, Circle } from "ol/style";
 import "../../services/server";
 import data from "../../services/servers.json";
 import { Dialogs } from "..";
-const MapComponent = () => {
+const LittleMap = () => {
   const mapContainerRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [FId, setFId] = useState<Number>();
+  const [initCenter, setInitCenter] = useState([]);
   const handleClickOpen = () => {
     setOpen(true);
     console.log(open);
@@ -34,8 +35,7 @@ const MapComponent = () => {
 
     mapContainerRef.current = mapContainer;
 
-    document.getElementById("map-container").appendChild(mapContainer);
-
+    document.getElementById("littleMap").appendChild(mapContainer);
     const map = new Map({
       target: mapContainerId,
       layers: [
@@ -44,7 +44,7 @@ const MapComponent = () => {
         }),
       ],
       view: new View({
-        center: [5720467.70799008, 4262248.0061709145],
+        center: initCenter,
         zoom: 12,
       }),
     });
@@ -99,33 +99,23 @@ const MapComponent = () => {
         const featureId = feature.ol_uid;
         const featureCoordinates = feature.getGeometry().getCoordinates();
         const featureProperties = feature.getProperties();
-        // <MyChartComponent/>
-        // alert(
-        //   `Feature ID: ${featureId}\nCoordinates: ${featureCoordinates}\nProperties: ${JSON.stringify(
-        //     featureProperties
-        //   )}`
-        // );
+        setInitCenter(featureCoordinates)
         console.log(featureProperties);
-        console.log(featureCoordinates)
-
         setOpen(true);
-        setFId(featureId)
+        setFId(featureId);
       }
     });
 
-    
     return () => {
       map.setTarget(null);
-      document
-        .getElementById("map-container")
-        .removeChild(mapContainerRef.current);
+      document.getElementById("littleMap");
     };
   }, []);
 
   return (
     <>
       <div
-        id="map-container"
+        id="littleMap"
         style={{ width: "100%", height: "400px" }}
         ref={mapContainerRef}
       ></div>
@@ -139,4 +129,4 @@ const MapComponent = () => {
   );
 };
 
-export default MapComponent;
+export default LittleMap;

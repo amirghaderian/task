@@ -7,9 +7,10 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import MyChartComponent from "../sample";
+import MyChartComponent from "../chart/Chart";
 import { useState } from "react";
-import { MapComponent } from "..";
+import { LittleMap, MapComponent } from "..";
+import { Box } from "@mui/material";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -20,16 +21,22 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const Dialogs = ({ isOpen, handleClose, handleClickOpen ,fId}) => {
+const Dialogs = ({ isOpen, handleClose, handleClickOpen, fId }) => {
   return (
-    <>
+    <div className="min-w-[1000px]">
       <BootstrapDialog
+        fullWidth
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={isOpen}
         sx={{ width: "100%", height: "100%" }}
       >
-        <DialogTitle id="customized-dialog-title" sx={{bgcolor:"rgb(0,101,162)"}}>Time Series</DialogTitle>
+        <DialogTitle
+          id="customized-dialog-title"
+          sx={{ bgcolor: "rgb(0,101,162)" }}
+        >
+          Time Series
+        </DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -42,24 +49,16 @@ const Dialogs = ({ isOpen, handleClose, handleClickOpen ,fId}) => {
         >
           <CloseIcon />
         </IconButton>
+        <Box  sx={{display:"flex",justifyContent:"center"}}>
+          <LittleMap />
+          <MyChartComponent fId={fId} />
+        </Box>
 
-        {/* <MapComponent /> */}
-        <MyChartComponent fId={fId}/>
-
-        <DialogContent dividers >
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
-          </Typography>
+        <DialogContent dividers>
+          <Typography gutterBottom></Typography>
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
-          </Button>
-        </DialogActions>
       </BootstrapDialog>
-    </>
+    </div>
   );
 };
 export default Dialogs;
