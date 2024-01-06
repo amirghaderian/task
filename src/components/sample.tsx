@@ -2,8 +2,7 @@ import ReactEcharts from "echarts-for-react";
 import dataChart from "../services/servers.json";
 const MyChartComponent = ({ fId }) => {
   console.log(dataChart);
-  const findItem = dataChart.find((item) => {return
-    item.featureId===Number(fId)
+  const findItem = dataChart.find((item) => {return (item.featureId===Number(fId))
   });
   console.log(findItem);
   const option = {
