@@ -20,6 +20,7 @@ const MapComponent = () => {
     setOpen(true);
     console.log(open);
   };
+  const [centerId,setCenterId]=useState<Number>()
   const handleClose = () => {
     setOpen(false);
   };
@@ -101,6 +102,8 @@ const MapComponent = () => {
         const featureCoordinates = feature.getGeometry().getCoordinates();
         const featureProperties = feature.getProperties();
         setCenter(featureCoordinates);
+        setCenterId(featureId)
+        
         // <MyChartComponent/>
         // alert(
         //   `Feature ID: ${featureId}\nCoordinates: ${featureCoordinates}\nProperties: ${JSON.stringify(
@@ -133,6 +136,7 @@ const MapComponent = () => {
         handleClickOpen={handleClickOpen}
         handleClose={handleClose}
         center={center}
+        centerId={centerId}
         fId={FId}
       />
     </>

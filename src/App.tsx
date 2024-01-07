@@ -1,4 +1,4 @@
-import { Dialogs, MapComponent } from "./components";
+import {  MapComponent } from "./components";
 const App = () => {
   return (
     <>

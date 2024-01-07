@@ -8,8 +8,8 @@ import Typography from "@mui/material/Typography";
 import MyChartComponent from "../chart/Chart";
 import { LittleMap } from "..";
 import { Box } from "@mui/material";
-import { useEffect, useState } from "react";
-
+import { CheckCircle, Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -18,15 +18,14 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
-
-const Dialogs = ({ isOpen, handleClose, fId, center }) => {
-  const [id, setId] = useState();
-  useEffect(() => {
-    setId(fId);
-    console.log("dialog:1111");
-    console.log(id);
-  }, [id,fId]);
- 
+const Dialogs = ({ isOpen, handleClose, fId, center, onIdNumberChange,centerId }) => {
+  const [isSee, setSee] = useState(false);
+  const nearPointList = ["newYourk", "tehran", "mashhad"];
+  const handleIdNumberChange = (newIdNumber) => {
+    console.log("Id Number changed:", newIdNumber);
+    // onIdNumberChange(newIdNumber);
+    // اینجا می‌توانید مقدار جدید را به state یا هر کار دیگری انجام دهید.
+  };
   return (
     <div className="min-w-[1000px]">
       <BootstrapDialog
@@ -56,8 +55,21 @@ const Dialogs = ({ isOpen, handleClose, fId, center }) => {
           <CloseIcon />
         </IconButton>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <LittleMap center={center} />
-          <MyChartComponent fId={fId} />
+          <LittleMap center={center} onIdNumberChange={handleIdNumberChange} centerId={centerId} />
+          <MyChartComponent fId={fId} onIdNumberChange={onIdNumberChange} />
+        </Box>
+        <Box>
+          <Box sx={{ width: "" }}>
+            {nearPointList.map((nearPoint, index) => {
+              return (
+                <div key={index} style={{ display: "flex" }}>
+                  <CheckCircle/>
+                  {nearPoint}
+                  {<Visibility/>}
+                </div>
+              );
+            })}
+          </Box>
         </Box>
 
         <DialogContent dividers>

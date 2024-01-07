@@ -9,33 +9,33 @@ import Feature from "ol/Feature";
 import { Vector as VectorLayer } from "ol/layer";
 import { Vector as VectorSource } from "ol/source";
 import { Style, Fill, Stroke, Circle } from "ol/style";
-import "../../services/server";
 import data from "../../services/servers.json";
-const LittleMap = ({ center, onMapClick }) => {
+const LittleMap = ({ center, onMapClick, onIdNumberChange, centerId }) => {
   const mapContainerRef = useRef(null);
   const [open, setOpen] = useState(false);
-  const [FId, setFId] = useState<Number>();
-  const [centerMap, setCenterMap] = useState([]);
-  const [initCenter, setInitCenter] = useState([]);
-  const handleClickOpen = () => {
-    setOpen(true);
-    console.log(open);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleMapClick = (clickedData) => {
-    console.log("jjj",clickedData);
-    
-  };
+  const [idNumber, setIdNumber] = useState<Number>();
+  const y = 0.01324773;
+  const x = 2.16 * y;
+  console.log(center);
+  const FindLatiude = data.find((item) => item.id === centerId)?.location
+    .latitude;
+  const FindeLongitude = data.find((item) => item.id === centerId)?.location
+    .longitude;
+  const FilterNear = data.filter(
+    (item) =>
+      (item.location.latitude >= FindLatiude - y &&
+        item.location.latitude <= FindLatiude + y) ||
+      (item.location.longitude >= FindeLongitude - x &&
+        item.location.longitude <= FindeLongitude + x)
+  );
+  console.log(FilterNear);
   useEffect(() => {
     const mapContainerId = `map-${Math.floor(Math.random() * 1000)}`;
 
     const mapContainer = document.createElement("div");
     mapContainer.id = mapContainerId;
     mapContainer.style.width = "100%";
-    mapContainer.style.height = "400px";
+    mapContainer.style.height = "200px";
 
     mapContainerRef.current = mapContainer;
 
@@ -50,7 +50,10 @@ const LittleMap = ({ center, onMapClick }) => {
       view: new View({
         center: center,
         zoom: 13,
+        minZoom: 13,
+        maxZoom: 13,
       }),
+      interactions: [],
     });
 
     // Create an array of points
@@ -64,9 +67,7 @@ const LittleMap = ({ center, onMapClick }) => {
     const pointFeatures = points.map((point) => {
       const geom = new Point(fromLonLat(point.coordinates));
       const feature = new Feature(geom);
-
       feature.ol_uid = point.id;
-      
       // Style for the point
       const pointStyle = new Style({
         image: new Circle({
@@ -97,16 +98,12 @@ const LittleMap = ({ center, onMapClick }) => {
       );
 
       if (feature) {
-
         const featureId = feature.ol_uid;
         const featureCoordinates = feature.getGeometry().getCoordinates();
         const featureProperties = feature.getProperties();
-        setInitCenter(featureCoordinates);
         setOpen(true);
-        setCenterMap(featureCoordinates);
-        console.log(featureId);
-        handleMapClick(Number(featureId));
-        setFId(Number(featureId));
+        setIdNumber(Number(featureId));
+        onIdNumberChange(Number(featureId));
       }
     });
 
@@ -117,7 +114,7 @@ const LittleMap = ({ center, onMapClick }) => {
         mapContainerElement.removeChild(mapContainerRef.current);
       }
     };
-  }, []);
+  }, [idNumber, onIdNumberChange]);
 
   return (
     <>
