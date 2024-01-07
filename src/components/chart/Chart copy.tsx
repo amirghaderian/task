@@ -50,6 +50,7 @@ let option = {
   };
   setTimeout(function(){
     //get data filter when cliced onlittledmap and push or pop from serise and set option agin echart via usref
+    //فکر کنم باید ازکامپوننت لیتل مپ یک ایونت هندلر پاس بدی به این  کامپوننت و اینجا هم خط کد های زیر رو با تغییر که باز با توجه با اینکه چی کلیک شده دیتا رو فیلتر کنی بزاری توی این هندلر
     daynamictimeSeri.push({
       name: 'clicked point title',
       type: 'line',
