@@ -21,6 +21,7 @@ const LittleMap = ({ center, onMapClick, onIdNumberChange, centerId }) => {
     .latitude;
   const FindeLongitude = data.find((item) => item.id === centerId)?.location
     .longitude;
+    debugger
   const FilterNear = data.filter(
     (item) =>
       (item.location.latitude >= FindLatiude - y &&
@@ -98,6 +99,7 @@ const LittleMap = ({ center, onMapClick, onIdNumberChange, centerId }) => {
       );
 
       if (feature) {
+        alert()
         const featureId = feature.ol_uid;
         const featureCoordinates = feature.getGeometry().getCoordinates();
         const featureProperties = feature.getProperties();

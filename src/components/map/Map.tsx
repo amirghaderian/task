@@ -59,6 +59,7 @@ const MapComponent = () => {
 
     // Create an array of point features
     const pointFeatures = points.map((point) => {
+ 
       const geom = new Point(fromLonLat(point.coordinates));
       const feature = new Feature(geom);
       feature.ol_uid = point.id;
@@ -87,6 +88,7 @@ const MapComponent = () => {
     map.addLayer(vectorLayer);
 
     map.on("click", function (event) {
+      debugger
       const feature = map.forEachFeatureAtPixel(
         event.pixel,
         function (feature) {
