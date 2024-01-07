@@ -8,8 +8,10 @@ import Typography from "@mui/material/Typography";
 import MyChartComponent from "../chart/Chart";
 import { LittleMap } from "..";
 import { Box } from "@mui/material";
-import { CheckCircle, Visibility, VisibilityOff } from "@mui/icons-material";
+import Iran from "../../images/iranFlag.png"
 import { useState } from "react";
+import data from "../../services/servers.json";
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -18,9 +20,32 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
-const Dialogs = ({ isOpen, handleClose, fId, center, onIdNumberChange,centerId }) => {
+const Dialogs = ({
+  isOpen,
+  handleClose,
+  fId,
+  center,
+  onIdNumberChange,
+  centerId,
+}) => {
   const [isSee, setSee] = useState(false);
   const nearPointList = ["newYourk", "tehran", "mashhad"];
+
+  const y = 0.01324773;
+  const x = 2.16 * y;
+  const findCenter = data.find((item) => item.id === centerId);
+  console.log(findCenter, "center");
+  const FindLatiude = data.find((item) => item.id === centerId)?.location
+    .latitude;
+  const FindeLongitude = data.find((item) => item.id === centerId)?.location
+    .longitude;
+  const nearPoints = data.filter(
+    (item) =>
+      // find latitude betveen FindLatiude-y & FindLatiude+y
+      Math.abs(FindLatiude - item.location.latitude) <= y &&
+      Math.abs(FindeLongitude - item.location.longitude) <= x
+  );
+
   const handleIdNumberChange = (newIdNumber) => {
     console.log("Id Number changed:", newIdNumber);
     // onIdNumberChange(newIdNumber);
@@ -55,17 +80,21 @@ const Dialogs = ({ isOpen, handleClose, fId, center, onIdNumberChange,centerId }
           <CloseIcon />
         </IconButton>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <LittleMap center={center} onIdNumberChange={handleIdNumberChange} centerId={centerId} />
+          <LittleMap
+            center={center}
+            onIdNumberChange={handleIdNumberChange}
+            centerId={centerId}
+          />
           <MyChartComponent fId={fId} onIdNumberChange={onIdNumberChange} />
         </Box>
         <Box>
-          <Box sx={{ width: "" }}>
-            {nearPointList.map((nearPoint, index) => {
+          <Box sx={{ ml: "15px" }}>
+            {nearPoints.map((item) => {
               return (
-                <div key={index} style={{ display: "flex" }}>
-                  <CheckCircle/>
-                  {nearPoint}
-                  {<Visibility/>}
+                <div key={item.id} className="ml-4">
+                   <img src={Iran} alt="iran" width={45} height={27} />
+                  {item.title}
+                 
                 </div>
               );
             })}

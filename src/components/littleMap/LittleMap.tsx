@@ -14,21 +14,7 @@ const LittleMap = ({ center, onMapClick, onIdNumberChange, centerId }) => {
   const mapContainerRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [idNumber, setIdNumber] = useState<Number>();
-  const y = 0.01324773;
-  const x = 2.16 * y;
-  console.log(center);
-  const FindLatiude = data.find((item) => item.id === centerId)?.location
-    .latitude;
-  const FindeLongitude = data.find((item) => item.id === centerId)?.location
-    .longitude;
-  const FilterNear = data.filter(
-    (item) =>
-      (item.location.latitude >= FindLatiude - y &&
-        item.location.latitude <= FindLatiude + y) ||
-      (item.location.longitude >= FindeLongitude - x &&
-        item.location.longitude <= FindeLongitude + x)
-  );
-  console.log(FilterNear);
+
   useEffect(() => {
     const mapContainerId = `map-${Math.floor(Math.random() * 1000)}`;
 
