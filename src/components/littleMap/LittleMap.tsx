@@ -14,6 +14,7 @@ const LittleMap = ({ center, onMapClick, onIdNumberChange, centerId }) => {
   const mapContainerRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [idNumber, setIdNumber] = useState<Number>();
+<<<<<<< HEAD
   const y = 0.01324773;
   const x = 2.16 * y;
   console.log(center);
@@ -30,6 +31,9 @@ const LittleMap = ({ center, onMapClick, onIdNumberChange, centerId }) => {
         item.location.longitude <= FindeLongitude + x)
   );
   console.log(FilterNear);
+=======
+
+>>>>>>> e15417824cd59c1b945ac8b8d84c5fc2343a6332
   useEffect(() => {
     const mapContainerId = `map-${Math.floor(Math.random() * 1000)}`;
 
