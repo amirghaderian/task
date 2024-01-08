@@ -5,23 +5,11 @@ import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-<<<<<<< HEAD
 import RadioButtonUnchecked from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonChecked from "@mui/icons-material/RadioButtonChecked";
 import { LittleMap } from "..";
-import {
-  Box,
-  Checkbox,
-  Divider,
-  List,
-  ListItem,
-} from "@mui/material";
+import { Box, Checkbox, Divider, List, ListItem } from "@mui/material";
 import Iran from "../../images/iranFlag.png";
-=======
-import { LittleMap } from "..";
-import { Box } from "@mui/material";
-import Iran from "../../images/iranFlag.png"
->>>>>>> 00dc7212e894e6c4263c515b9a1c1c38324ed0e8
 import data from "../../services/servers.json";
 import Echart from "../chart/Chart copy";
 import { useState } from "react";
@@ -41,6 +29,8 @@ const Dialogs = ({
   center,
   onIdNumberChange,
   centerId,
+  timeSeries,
+  setTimeSeries,
 }) => {
   const [littleMapId, setLittleMapId] = useState(null);
   const y = 0.01324773;
@@ -58,13 +48,13 @@ const Dialogs = ({
       Math.abs(FindeLongitude - item.location.longitude) <= x
   );
 
+  const handleCloseDialog = (setTimeSeries) => {
+    handleClose;
+  };
+
   const handleIdNumberChange = (newIdNumber) => {
     console.log("Id Number changed:", newIdNumber);
-<<<<<<< HEAD
     setLittleMapId(newIdNumber);
-=======
-    setLittleMapId(newIdNumber)
->>>>>>> 00dc7212e894e6c4263c515b9a1c1c38324ed0e8
     ////////////////////////////////////////
     // onIdNumberChange(newIdNumber);
     // اینجا می‌توانید مقدار جدید را به state یا هر کار دیگری انجام دهید.
@@ -113,15 +103,14 @@ const Dialogs = ({
             onIdNumberChange={handleIdNumberChange}
             centerId={centerId}
           />
-<<<<<<< HEAD
           <Echart
+            timeSeries={timeSeries}
+            setTimeSeries={setTimeSeries}
+            onCloseDialog={handleCloseDialog}
             fId={fId}
             onIdNumberChange={onIdNumberChange}
             littleMapId={littleMapId}
           />
-=======
-          <Echart fId={fId} onIdNumberChange={onIdNumberChange} littleMapId={littleMapId}/>
->>>>>>> 00dc7212e894e6c4263c515b9a1c1c38324ed0e8
         </Box>
         <Box>
           <Box>
@@ -129,22 +118,35 @@ const Dialogs = ({
               return (
                 <>
                   <List sx={style} aria-label="mailbox folders" key={item.id}>
-                    <ListItem sx={{height:41}}>
-                      <div style={{display:"flex",justifyContent:"center",alignItems:"center",maxHeight:41}}>
+                    <ListItem sx={{ height: 41 }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          maxHeight: 41,
+                        }}
+                      >
                         <Checkbox
-                        disableRipple
+                          disableRipple
                           icon={
                             <RadioButtonUnchecked
                               sx={{ ml: "8px", my: "8px" }}
                             />
                           }
                           checkedIcon={
-                            <RadioButtonChecked sx={{ color: "blue",ml: "8px", my: "8px" }} />
+                            <RadioButtonChecked
+                              sx={{ color: "blue", ml: "8px", my: "8px" }}
+                            />
                           }
                         />
 
                         <img
-                          style={{ width: "32px", height: "24px",  marginRight:"10px"}}
+                          style={{
+                            width: "32px",
+                            height: "24px",
+                            marginRight: "10px",
+                          }}
                           src={Iran}
                           alt="iran"
                         />

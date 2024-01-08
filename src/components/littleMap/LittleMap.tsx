@@ -60,7 +60,7 @@ const LittleMap = ({ center, onIdNumberChange, centerId }) => {
     const points = data.map((server) => ({
       coordinates: [server.location?.longitude, server.location?.latitude],
       color: "#A6A7A6",
-      
+
       id: server.id,
     }));
 
@@ -119,7 +119,7 @@ const LittleMap = ({ center, onIdNumberChange, centerId }) => {
     <>
       <div
         id="littleMap"
-        style={{ width: "100%", height: "400px" }}
+        style={{ width: "100%", height: "100%" }}
         ref={mapContainerRef}
       ></div>
     </>

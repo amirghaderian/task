@@ -2,8 +2,14 @@ import ReactEcharts from "echarts-for-react";
 import { useEffect, useRef, useState } from "react";
 import data from "../../services/servers.json";
 
-const Echart = ({ fId, onIdNumberChange, littleMapId }) => {
-  const [timeSeries, setTimeSeries] = useState([]);
+const Echart = ({
+  fId,
+  onIdNumberChange,
+  littleMapId,
+  onSetTimeSeries,
+  timeSeries,
+  setTimeSeries,
+}) => {
   const [points, setPoints] = useState([]);
   const eChartsRef = useRef(null);
   const [selectedPoint, setSelectedPoint] = useState(null);
@@ -12,7 +18,7 @@ const Echart = ({ fId, onIdNumberChange, littleMapId }) => {
     const findPointTimeSerie = data.find(
       (item) => item.id === littleMapId
     )?.time_series;
-    setTimeSeries(findPointTimeSerie || []);
+    setTimeSeries(findPointTimeSerie);
   };
 
   useEffect(() => {
@@ -113,7 +119,7 @@ const Echart = ({ fId, onIdNumberChange, littleMapId }) => {
   return (
     <ReactEcharts
       option={option}
-      style={{ height: "400px", width: "100%" }}
+      style={{ height: "200px", width: "100%" }}
       className="w-[300px]"
       ref={eChartsRef}
     />
