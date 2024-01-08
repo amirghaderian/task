@@ -10,7 +10,7 @@ import { Vector as VectorLayer } from "ol/layer";
 import { Vector as VectorSource } from "ol/source";
 import { Style, Fill, Stroke, Circle } from "ol/style";
 import data from "../../services/servers.json";
-const LittleMap = ({ center, onMapClick, onIdNumberChange, centerId }) => {
+const LittleMap = ({ center, onIdNumberChange, centerId }) => {
   const mapContainerRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [idNumber, setIdNumber] = useState<Number>();
@@ -99,8 +99,6 @@ const LittleMap = ({ center, onMapClick, onIdNumberChange, centerId }) => {
 
       if (feature) {
         const featureId = feature.ol_uid;
-        const featureCoordinates = feature.getGeometry().getCoordinates();
-        const featureProperties = feature.getProperties();
         setOpen(true);
         setIdNumber(Number(featureId));
         onIdNumberChange(Number(featureId));
