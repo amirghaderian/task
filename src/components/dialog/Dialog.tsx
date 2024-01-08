@@ -5,6 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
+<<<<<<< HEAD
 import RadioButtonUnchecked from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonChecked from "@mui/icons-material/RadioButtonChecked";
 import { LittleMap } from "..";
@@ -16,6 +17,11 @@ import {
   ListItem,
 } from "@mui/material";
 import Iran from "../../images/iranFlag.png";
+=======
+import { LittleMap } from "..";
+import { Box } from "@mui/material";
+import Iran from "../../images/iranFlag.png"
+>>>>>>> 00dc7212e894e6c4263c515b9a1c1c38324ed0e8
 import data from "../../services/servers.json";
 import Echart from "../chart/Chart copy";
 import { useState } from "react";
@@ -54,7 +60,11 @@ const Dialogs = ({
 
   const handleIdNumberChange = (newIdNumber) => {
     console.log("Id Number changed:", newIdNumber);
+<<<<<<< HEAD
     setLittleMapId(newIdNumber);
+=======
+    setLittleMapId(newIdNumber)
+>>>>>>> 00dc7212e894e6c4263c515b9a1c1c38324ed0e8
     ////////////////////////////////////////
     // onIdNumberChange(newIdNumber);
     // اینجا می‌توانید مقدار جدید را به state یا هر کار دیگری انجام دهید.
@@ -103,11 +113,15 @@ const Dialogs = ({
             onIdNumberChange={handleIdNumberChange}
             centerId={centerId}
           />
+<<<<<<< HEAD
           <Echart
             fId={fId}
             onIdNumberChange={onIdNumberChange}
             littleMapId={littleMapId}
           />
+=======
+          <Echart fId={fId} onIdNumberChange={onIdNumberChange} littleMapId={littleMapId}/>
+>>>>>>> 00dc7212e894e6c4263c515b9a1c1c38324ed0e8
         </Box>
         <Box>
           <Box>

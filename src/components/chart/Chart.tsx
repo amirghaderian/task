@@ -49,16 +49,28 @@ const option = {
       {
         name: 'Video Ads',
         type: 'line',
+<<<<<<< HEAD
+=======
+        stack: 'Total',
+>>>>>>> 00dc7212e894e6c4263c515b9a1c1c38324ed0e8
         data:  findItem?.time_series
       },
       {
         name: 'Direct',
         type: 'line',
+<<<<<<< HEAD
+=======
+        stack: 'Total',
+>>>>>>> 00dc7212e894e6c4263c515b9a1c1c38324ed0e8
         data:  findItem?.time_series
       },
       {
         name: 'Search Engine',
         type: 'line',
+<<<<<<< HEAD
+=======
+        stack: 'Total',
+>>>>>>> 00dc7212e894e6c4263c515b9a1c1c38324ed0e8
         data:  findItem?.time_series
       }
     ]

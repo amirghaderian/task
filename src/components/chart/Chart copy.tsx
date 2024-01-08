@@ -31,6 +31,10 @@ const Echart = ({ fId, onIdNumberChange, littleMapId }) => {
   const pointsMap = points.map((point) => ({
     name: point.title,
     type: "line",
+<<<<<<< HEAD
+=======
+    stack: "Total",
+>>>>>>> 00dc7212e894e6c4263c515b9a1c1c38324ed0e8
     data: point.time_series || [],
     smooth: true,
     emphasis: {
@@ -41,6 +45,10 @@ const Echart = ({ fId, onIdNumberChange, littleMapId }) => {
     {
       name: "Search Engine",
       type: "line",
+<<<<<<< HEAD
+=======
+      stack: "Total",
+>>>>>>> 00dc7212e894e6c4263c515b9a1c1c38324ed0e8
       smooth: true,
       data: findItem?.time_series || [],
     },
