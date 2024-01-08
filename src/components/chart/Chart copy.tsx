@@ -3,36 +3,36 @@ import { useEffect, useRef, useState } from "react";
 import data from "../../services/servers.json";
 
 const Echart = ({ fId, onIdNumberChange, littleMapId }) => {
-  const firstChart= data.find((item)=>item.id===fId)?.time_series
-  console.log(firstChart,"firstChart");
-  const [timeSeries, setTimeSeries] = useState(firstChart);
+  const [timeSeries, setTimeSeries] = useState([]);
 
-  console.log(onIdNumberChange);
-  console.log(littleMapId);
-  const eChartsRef = useRef(null as any);
+  const eChartsRef = useRef(null);
+
   const handleChart = () => {
-    const findPointTimeSerie = data.find(
-      (item) => item.id === littleMapId
-    )?.time_series;
-    setTimeSeries(findPointTimeSerie);
-
-    console.log(timeSeries);
+    const findPointTimeSerie = data.find((item) => item.id === littleMapId)?.time_series;
+    setTimeSeries(findPointTimeSerie || []);
   };
+
   useEffect(() => {
     handleChart();
   }, [littleMapId]);
-  const findItem = data.find((item) => {
-    return item.id === fId;
-  });
-  let daynamictimeSeri = [
+
+  const findItem = data.find((item) => item.id === fId);
+  const daynamictimeSeri = [
     {
       name: "Search Engine",
       type: "line",
       stack: "Total",
-      data: [findItem?.time_series],
+      data: findItem?.time_series || [],
+    },
+    {
+      name: "Clicked Points",
+      type: "line",
+      stack: "Total",
+      data: timeSeries.map((point, index) => [index, point]),
     },
   ];
-  let option = {
+
+  const option = {
     title: {
       text: "Stacked Line",
     },
@@ -40,7 +40,7 @@ const Echart = ({ fId, onIdNumberChange, littleMapId }) => {
       trigger: "axis",
     },
     legend: {
-      data: ["Email", "Union Ads", "Video Ads", "Direct", "Search Engine"],
+      data: ["Search Engine", "Clicked Points"],
     },
     grid: {
       left: "3%",
@@ -63,18 +63,13 @@ const Echart = ({ fId, onIdNumberChange, littleMapId }) => {
     },
     series: daynamictimeSeri,
   };
-  setTimeout(function () {
-    //get data filter when cliced onlittledmap and push or pop from serise and set option agin echart via usref
-    //فکر کنم باید ازکامپوننت لیتل مپ یک ایونت هندلر پاس بدی به این  کامپوننت و اینجا هم خط کد های زیر رو با تغییر که باز با توجه با اینکه چی کلیک شده دیتا رو فیلتر کنی بزاری توی این هندلر
-    daynamictimeSeri.push({
-      name: "clicked point title",
-      type: "line",
-      stack: "",
-      data: timeSeries,
-    });
-    if (eChartsRef && eChartsRef.current)
-      eChartsRef.current?.getEchartsInstance().setOption(option);
-  }, 0);
+
+  useEffect(() => {
+    // You can handle dynamic changes to the series here
+    if (eChartsRef && eChartsRef.current) {
+      eChartsRef.current.getEchartsInstance().setOption(option);
+    }
+  }, [timeSeries, option]);
 
   return (
     <ReactEcharts
