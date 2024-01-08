@@ -17,14 +17,16 @@ const MapComponent = () => {
   const [FId, setFId] = useState<Number>();
   const [center, setCenter] = useState([]);
   const [timeSeries, setTimeSeries] = useState([]);
+  const [littleMapId, setLittleMapId] = useState(null);
+
   const handleClickOpen = () => {
     setOpen(true);
     console.log(open);
   };
   const [centerId, setCenterId] = useState<Number>();
   const handleClose = () => {
-    setTimeSeries(null);
-    console.log(timeSeries,".......1...1...1.1.1.1.");
+    setLittleMapId(null)
+    console.log(timeSeries, ".......1...1...1.1.1.1.");
     setOpen(false);
   };
 
@@ -135,6 +137,8 @@ const MapComponent = () => {
         ref={mapContainerRef}
       ></div>
       <Dialogs
+        littleMapId={littleMapId}
+        setLittleMapId={setLittleMapId}
         timeSeries={timeSeries}
         setTimeSeries={setTimeSeries}
         isOpen={open}

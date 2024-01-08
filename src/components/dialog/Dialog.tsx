@@ -11,7 +11,7 @@ import { LittleMap } from "..";
 import { Box, Checkbox, Divider, List, ListItem } from "@mui/material";
 import Iran from "../../images/iranFlag.png";
 import data from "../../services/servers.json";
-import Echart from "../chart/Chart copy";
+import Echart from "../chart/Chart";
 import { useState } from "react";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -29,10 +29,9 @@ const Dialogs = ({
   center,
   onIdNumberChange,
   centerId,
-  timeSeries,
-  setTimeSeries,
+  timeSeries,littleMapId,setLittleMapId
 }) => {
-  const [littleMapId, setLittleMapId] = useState(null);
+  console.log(timeSeries);
   const y = 0.01324773;
   const x = 2.16 * y;
   const findCenter = data.find((item) => item.id === centerId);
@@ -47,10 +46,6 @@ const Dialogs = ({
       Math.abs(FindLatiude - item.location.latitude) <= y &&
       Math.abs(FindeLongitude - item.location.longitude) <= x
   );
-
-  const handleCloseDialog = (setTimeSeries) => {
-    handleClose;
-  };
 
   const handleIdNumberChange = (newIdNumber) => {
     console.log("Id Number changed:", newIdNumber);
@@ -97,16 +92,16 @@ const Dialogs = ({
         >
           <CloseIcon />
         </IconButton>
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box sx={{ display: "flex", justifyContent: "center"}}>
           <LittleMap
+           style={{flexGrow:1}}
             center={center}
             onIdNumberChange={handleIdNumberChange}
             centerId={centerId}
           />
           <Echart
+          style={{flexGrow:8}}
             timeSeries={timeSeries}
-            setTimeSeries={setTimeSeries}
-            onCloseDialog={handleCloseDialog}
             fId={fId}
             onIdNumberChange={onIdNumberChange}
             littleMapId={littleMapId}

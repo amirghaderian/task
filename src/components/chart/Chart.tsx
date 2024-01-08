@@ -1,20 +1,46 @@
 import ReactEcharts from "echarts-for-react";
-import dataChart from "../../services/servers.json";
-const MyChartComponent = ({ fId, onIdNumberChange }) => {
-  // console.log(dataChart);
-  console.log(onIdNumberChange);
-  const findItem = dataChart.find((item) => {
-    return item.id === fId;
-  });
-  const option = {
-    title: {
-      text: "Stacked Line",
+import { useEffect, useRef, useState } from "react";
+import data from "../../services/servers.json";
+
+const Echart = ({ fId, littleMapId, timeSeries }) => {
+  const [points, setPoints] = useState([]);
+  const eChartsRef = useRef(null);
+
+  useEffect(() => {
+    if (littleMapId) {
+      console.log(littleMapId, "3111111");
+      const findPoint = data.find((item) => item.id === littleMapId);
+      setPoints((prev) => [...prev, findPoint]);
+    }
+  }, [littleMapId]);
+
+  const findItem = data.find((item) => item.id === fId);
+
+  const pointsMap = points.map((point) => ({
+    name: point.title,
+    type: "line",
+    data: point.time_series || [],
+    smooth: true,
+    emphasis: {
+      focus: "series",
     },
+  }));
+  const daynamictimeSeri = [
+    {
+      name: "Search Engine",
+      type: "line",
+      smooth: true,
+      data: findItem?.time_series || [],
+    },
+    ...pointsMap,
+  ];
+
+  const option = {
     tooltip: {
       trigger: "axis",
     },
     legend: {
-      data: ["Email", "Union Ads", "Video Ads", "Direct", "Search Engine"],
+      data: ["Search Engine", ...points.map((point) => point.title)],
     },
     grid: {
       left: "3%",
@@ -24,7 +50,9 @@ const MyChartComponent = ({ fId, onIdNumberChange }) => {
     },
     toolbox: {
       feature: {
-        saveAsImage: {},
+        saveAsImage: {
+          title: "دانلود چارت",
+        },
       },
     },
     xAxis: {
@@ -35,42 +63,47 @@ const MyChartComponent = ({ fId, onIdNumberChange }) => {
     yAxis: {
       type: "value",
     },
-    series: [
+    dataZoom: [
       {
-        name: "Email",
-        type: "line",
-        data: findItem?.time_series,
+        show: true, // نمایش ابزار زوم
+        start: 0, // درصد شروع زوم
+        end: 100, // درصد پایان زوم
+        handleSize: "100%", // اندازه دسته زوم (تا 100% از نمودار)
+        handleStyle: {
+          color: "#fff",
+          shadowBlur: 3,
+          shadowColor: "rgba(0, 0, 0, 0.6)",
+          shadowOffsetX: 2,
+          shadowOffsetY: 2,
+        },
+        textStyle: {
+          color: "#fff",
+        },
       },
       {
-        name: "Union Ads",
-        type: "line",
-        data: findItem?.time_series,
-      },
-      {
-        name: "Video Ads",
-        type: "line",
-        data: findItem?.time_series,
-      },
-      {
-        name: "Direct",
-        type: "line",
-        data: findItem?.time_series,
-      },
-      {
-        name: "Search Engine",
-        type: "line",
-        data: findItem?.time_series,
+        type: "inside",
+        xAxisIndex: [0],
+        start: 30,
+        end: 70,
       },
     ],
+
+    series: daynamictimeSeri,
   };
 
+  useEffect(() => {
+    if (eChartsRef && eChartsRef.current) {
+      eChartsRef.current.getEchartsInstance().setOption(option);
+    }
+  }, [timeSeries, option]);
+  console.log(timeSeries, "888");
   return (
     <ReactEcharts
       option={option}
-      style={{ height: "400px", width: "100%" }}
+      style={{ height: "200px", width: "100%" }}
       className="w-[300px]"
+      ref={eChartsRef}
     />
   );
 };
-
-export default MyChartComponent;
+export default Echart;
