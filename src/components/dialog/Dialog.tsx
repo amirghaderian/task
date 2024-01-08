@@ -5,12 +5,20 @@ import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import MyChartComponent from "../chart/Chart";
+import RadioButtonUnchecked from "@mui/icons-material/RadioButtonUnchecked";
+import RadioButtonChecked from "@mui/icons-material/RadioButtonChecked";
 import { LittleMap } from "..";
-import { Box } from "@mui/material";
-import Iran from "../../images/iranFlag.png"
-import { useState } from "react";
+import {
+  Box,
+  Checkbox,
+  Divider,
+  List,
+  ListItem,
+} from "@mui/material";
+import Iran from "../../images/iranFlag.png";
 import data from "../../services/servers.json";
+import Echart from "../chart/Chart copy";
+import { useState } from "react";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -28,9 +36,7 @@ const Dialogs = ({
   onIdNumberChange,
   centerId,
 }) => {
-  const [isSee, setSee] = useState(false);
-  const nearPointList = ["newYourk", "tehran", "mashhad"];
-
+  const [littleMapId, setLittleMapId] = useState(null);
   const y = 0.01324773;
   const x = 2.16 * y;
   const findCenter = data.find((item) => item.id === centerId);
@@ -48,8 +54,20 @@ const Dialogs = ({
 
   const handleIdNumberChange = (newIdNumber) => {
     console.log("Id Number changed:", newIdNumber);
+    setLittleMapId(newIdNumber);
+    ////////////////////////////////////////
     // onIdNumberChange(newIdNumber);
     // اینجا می‌توانید مقدار جدید را به state یا هر کار دیگری انجام دهید.
+  };
+  const style = {
+    p: 0,
+    width: "100%",
+    maxWidth: 282,
+    borderRadius: 2,
+    border: "1px solid",
+    borderColor: "divider",
+    backgroundColor: "background.paper",
+    borderStyle: "dashed",
   };
   return (
     <div className="min-w-[1000px]">
@@ -85,17 +103,47 @@ const Dialogs = ({
             onIdNumberChange={handleIdNumberChange}
             centerId={centerId}
           />
-          <MyChartComponent fId={fId} onIdNumberChange={onIdNumberChange} />
+          <Echart
+            fId={fId}
+            onIdNumberChange={onIdNumberChange}
+            littleMapId={littleMapId}
+          />
         </Box>
         <Box>
-          <Box sx={{ ml: "15px" }}>
+          <Box>
             {nearPoints.map((item) => {
               return (
-                <div key={item.id} className="ml-4">
-                   <img src={Iran} alt="iran" width={45} height={27} />
-                  {item.title}
-                 
-                </div>
+                <>
+                  <List sx={style} aria-label="mailbox folders" key={item.id}>
+                    <ListItem sx={{height:41}}>
+                      <div style={{display:"flex",justifyContent:"center",alignItems:"center",maxHeight:41}}>
+                        <Checkbox
+                        disableRipple
+                          icon={
+                            <RadioButtonUnchecked
+                              sx={{ ml: "8px", my: "8px" }}
+                            />
+                          }
+                          checkedIcon={
+                            <RadioButtonChecked sx={{ color: "blue",ml: "8px", my: "8px" }} />
+                          }
+                        />
+
+                        <img
+                          style={{ width: "32px", height: "24px",  marginRight:"10px"}}
+                          src={Iran}
+                          alt="iran"
+                        />
+                        {item.title}
+                      </div>
+                    </ListItem>
+                    <Divider
+                      component="li"
+                      light
+                      sx={{ borderStyle: "dashed" }}
+                    />
+                  </List>
+                </>
               );
             })}
           </Box>

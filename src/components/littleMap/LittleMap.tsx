@@ -10,11 +10,25 @@ import { Vector as VectorLayer } from "ol/layer";
 import { Vector as VectorSource } from "ol/source";
 import { Style, Fill, Stroke, Circle } from "ol/style";
 import data from "../../services/servers.json";
-const LittleMap = ({ center, onMapClick, onIdNumberChange, centerId }) => {
+const LittleMap = ({ center, onIdNumberChange, centerId }) => {
   const mapContainerRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [idNumber, setIdNumber] = useState<Number>();
-
+  const y = 0.01324773;
+  const x = 2.16 * y;
+  console.log(center);
+  const FindLatiude = data.find((item) => item.id === centerId)?.location
+    .latitude;
+  const FindeLongitude = data.find((item) => item.id === centerId)?.location
+    .longitude;
+  const FilterNear = data.filter(
+    (item) =>
+      (item.location.latitude >= FindLatiude - y &&
+        item.location.latitude <= FindLatiude + y) ||
+      (item.location.longitude >= FindeLongitude - x &&
+        item.location.longitude <= FindeLongitude + x)
+  );
+  console.log(FilterNear);
   useEffect(() => {
     const mapContainerId = `map-${Math.floor(Math.random() * 1000)}`;
 
@@ -45,7 +59,8 @@ const LittleMap = ({ center, onMapClick, onIdNumberChange, centerId }) => {
     // Create an array of points
     const points = data.map((server) => ({
       coordinates: [server.location?.longitude, server.location?.latitude],
-      color: "blue",
+      color: "#A6A7A6",
+      
       id: server.id,
     }));
 
@@ -85,8 +100,6 @@ const LittleMap = ({ center, onMapClick, onIdNumberChange, centerId }) => {
 
       if (feature) {
         const featureId = feature.ol_uid;
-        const featureCoordinates = feature.getGeometry().getCoordinates();
-        const featureProperties = feature.getProperties();
         setOpen(true);
         setIdNumber(Number(featureId));
         onIdNumberChange(Number(featureId));
