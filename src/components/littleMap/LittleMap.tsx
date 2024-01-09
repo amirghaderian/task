@@ -10,17 +10,24 @@ import { Vector as VectorLayer } from "ol/layer";
 import { Vector as VectorSource } from "ol/source";
 import { Style, Fill, Stroke, Circle } from "ol/style";
 import data from "../../services/servers.json";
-const LittleMap = ({ center, onIdNumberChange, centerId }) => {
+
+const LittleMap = ({
+  center,
+  onIdNumberChange,
+  centerId,
+  pointList,
+  setPoints,
+  removePointById,
+}) => {
   const mapContainerRef = useRef(null);
   const [open, setOpen] = useState(false);
+  const [selectedPoints, setSelectedPoints] = useState();
   const [idNumber, setIdNumber] = useState<Number>();
   const y = 0.01324773;
   const x = 2.16 * y;
-  console.log(center);
-  const FindLatiude = data.find((item) => item.id === centerId)?.location
-    .latitude;
-  const FindeLongitude = data.find((item) => item.id === centerId)?.location
-    .longitude;
+
+  const FindLatiude = data.find((item) => item.id === centerId)?.location.latitude;
+  const FindeLongitude = data.find((item) => item.id === centerId)?.location.longitude;
   const FilterNear = data.filter(
     (item) =>
       (item.location.latitude >= FindLatiude - y &&
@@ -28,18 +35,19 @@ const LittleMap = ({ center, onIdNumberChange, centerId }) => {
       (item.location.longitude >= FindeLongitude - x &&
         item.location.longitude <= FindeLongitude + x)
   );
-  console.log(FilterNear);
+
   useEffect(() => {
     const mapContainerId = `map-${Math.floor(Math.random() * 1000)}`;
 
     const mapContainer = document.createElement("div");
     mapContainer.id = mapContainerId;
-    mapContainer.style.width = "100%";
-    mapContainer.style.height = "200px";
+    mapContainer.style.width = "280px";
+    mapContainer.style.height = "300px";
 
     mapContainerRef.current = mapContainer;
 
     document.getElementById("littleMap").appendChild(mapContainer);
+
     const map = new Map({
       target: mapContainerId,
       layers: [
@@ -56,15 +64,43 @@ const LittleMap = ({ center, onIdNumberChange, centerId }) => {
       interactions: [],
     });
 
+    // Create a circle geometry for the buffer
+    const bufferGeometry = new Circle(fromLonLat(center), 2000);
+
+    // Create a feature for the buffer geometry
+    const bufferFeature = new Feature(bufferGeometry);
+
+    // Style for the buffer
+    const bufferStyle = new Style({
+      fill: new Fill({
+        color: 'rgba(0, 0, 255, 0.1)', // Adjust the color and opacity as needed
+      }),
+      stroke: new Stroke({
+        color: 'blue',
+        width: 2,
+      }),
+    });
+
+    bufferFeature.setStyle(bufferStyle);
+
+    const vectorBufferLayer = new VectorLayer({
+      source: new VectorSource({
+        features: [bufferFeature],
+      }),
+    });
+
+    map.addLayer(vectorBufferLayer);
+
     // Create an array of points
     const points = data.map((server) => ({
       coordinates: [server.location?.longitude, server.location?.latitude],
       color: "#A6A7A6",
-
       id: server.id,
     }));
 
     // Create an array of point features
+    const pointListId = pointList.map((item) => item.id);
+    console.log("PointList :", pointListId);
     const pointFeatures = points.map((point) => {
       const geom = new Point(fromLonLat(point.coordinates));
       const feature = new Feature(geom);
@@ -74,7 +110,12 @@ const LittleMap = ({ center, onIdNumberChange, centerId }) => {
         image: new Circle({
           radius: 7,
           fill: new Fill({
-            color: centerId === point.id ? "red" : point.color,
+            color:
+              pointList.id === point.id
+                ? "red"
+                : centerId === point.id
+                ? "blue"
+                : point.color,
           }),
           stroke: new Stroke({ color: "#808080", width: 1 }),
         }),
@@ -92,6 +133,7 @@ const LittleMap = ({ center, onIdNumberChange, centerId }) => {
     });
 
     map.addLayer(vectorLayer);
+
     map.on("click", function (event) {
       const feature = map.forEachFeatureAtPixel(
         event.pixel,
@@ -105,6 +147,10 @@ const LittleMap = ({ center, onIdNumberChange, centerId }) => {
         setOpen(true);
         setIdNumber(Number(featureId));
         onIdNumberChange(Number(featureId));
+        // Remove point from map and chart
+        console.log(points.some((point) => point.id === Number(featureId)),"asddddddd");
+        if (points.some((point) => point.id === Number(featureId)))
+          removePointById();
       }
     });
 
@@ -121,7 +167,7 @@ const LittleMap = ({ center, onIdNumberChange, centerId }) => {
     <>
       <div
         id="littleMap"
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "300px", height: "100%" }}
         ref={mapContainerRef}
       ></div>
     </>

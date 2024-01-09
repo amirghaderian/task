@@ -26,7 +26,7 @@ const MapComponent = () => {
   const [centerId, setCenterId] = useState<Number>();
   const handleClose = () => {
     setLittleMapId(null)
-    console.log(timeSeries, ".......1...1...1.1.1.1.");
+    console.log(timeSeries, ":timeSeries");
     setOpen(false);
   };
 
@@ -36,7 +36,7 @@ const MapComponent = () => {
     const mapContainer = document.createElement("div");
     mapContainer.id = mapContainerId;
     mapContainer.style.width = "100%";
-    mapContainer.style.height = "400px";
+    mapContainer.style.height = "590px";
 
     mapContainerRef.current = mapContainer;
 
@@ -51,7 +51,8 @@ const MapComponent = () => {
       ],
       view: new View({
         center: [5720467.70799008, 4262248.0061709145],
-        zoom: 12,
+        zoom: 14,
+        
       }),
     });
 

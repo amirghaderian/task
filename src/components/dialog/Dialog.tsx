@@ -13,7 +13,6 @@ import Iran from "../../images/iranFlag.png";
 import data from "../../services/servers.json";
 import Echart from "../chart/Chart";
 import { useState } from "react";
-
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -29,9 +28,18 @@ const Dialogs = ({
   center,
   onIdNumberChange,
   centerId,
-  timeSeries,littleMapId,setLittleMapId
+  timeSeries,
+  littleMapId,
+  setLittleMapId,
 }) => {
   console.log(timeSeries);
+  const [points, setPoints] = useState([]);
+
+  const removePointById = (id) => {
+    const filterd = points.filter((point) => point.id !== id);
+    setPoints(filterd);
+  };
+  console.log(points), "points";
   const y = 0.01324773;
   const x = 2.16 * y;
   const findCenter = data.find((item) => item.id === centerId);
@@ -92,69 +100,70 @@ const Dialogs = ({
         >
           <CloseIcon />
         </IconButton>
-        <Box sx={{ display: "flex", justifyContent: "center"}}>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
           <LittleMap
-           style={{flexGrow:1}}
+            style={{ flexGrow: 1 }}
+            removePointById={removePointById}
             center={center}
             onIdNumberChange={handleIdNumberChange}
             centerId={centerId}
+            setPoints={setPoints}
+            pointList={points}
           />
           <Echart
-          style={{flexGrow:8}}
+            style={{ flexGrow: 8 }}
             timeSeries={timeSeries}
             fId={fId}
             onIdNumberChange={onIdNumberChange}
             littleMapId={littleMapId}
+            setPoints={setPoints}
+            points={points}
           />
         </Box>
         <Box>
           <Box>
             {nearPoints.map((item) => {
               return (
-                <>
-                  <List sx={style} aria-label="mailbox folders" key={item.id}>
-                    <ListItem sx={{ height: 41 }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          maxHeight: 41,
-                        }}
-                      >
-                        <Checkbox
-                          disableRipple
-                          icon={
-                            <RadioButtonUnchecked
-                              sx={{ ml: "8px", my: "8px" }}
-                            />
-                          }
-                          checkedIcon={
-                            <RadioButtonChecked
-                              sx={{ color: "blue", ml: "8px", my: "8px" }}
-                            />
-                          }
-                        />
+                <List sx={style} aria-label="mailbox folders" key={item.id}>
+                  <ListItem sx={{ height: 41 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        maxHeight: 41,
+                      }}
+                    >
+                      <Checkbox
+                        disableRipple
+                        icon={
+                          <RadioButtonUnchecked sx={{ ml: "8px", my: "8px" }} />
+                        }
+                        checkedIcon={
+                          <RadioButtonChecked
+                            sx={{ color: "blue", ml: "8px", my: "8px" }}
+                          />
+                        }
+                      />
 
-                        <img
-                          style={{
-                            width: "32px",
-                            height: "24px",
-                            marginRight: "10px",
-                          }}
-                          src={Iran}
-                          alt="iran"
-                        />
-                        {item.title}
-                      </div>
-                    </ListItem>
-                    <Divider
-                      component="li"
-                      light
-                      sx={{ borderStyle: "dashed" }}
-                    />
-                  </List>
-                </>
+                      <img
+                        style={{
+                          width: "32px",
+                          height: "24px",
+                          marginRight: "10px",
+                        }}
+                        src={Iran}
+                        alt="iran"
+                      />
+                      {item.title}
+                    </div>
+                  </ListItem>
+                  <Divider
+                    component="li"
+                    light
+                    sx={{ borderStyle: "dashed" }}
+                  />
+                </List>
               );
             })}
           </Box>

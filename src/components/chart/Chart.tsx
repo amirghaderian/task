@@ -1,12 +1,13 @@
 import ReactEcharts from "echarts-for-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import data from "../../services/servers.json";
 
-const Echart = ({ fId, littleMapId, timeSeries }) => {
-  const [points, setPoints] = useState([]);
+const Echart = ({ fId, littleMapId, timeSeries, points, setPoints }) => {
   const eChartsRef = useRef(null);
+  console.log("12 points", points);
 
   useEffect(() => {
+    console.log(points, "poing");
     if (littleMapId) {
       console.log(littleMapId, "3111111");
       const findPoint = data.find((item) => item.id === littleMapId);
@@ -31,11 +32,28 @@ const Echart = ({ fId, littleMapId, timeSeries }) => {
       type: "line",
       smooth: true,
       data: findItem?.time_series || [],
+      emphasis: {
+        focus: "series",
+      },
     },
     ...pointsMap,
   ];
 
   const option = {
+    timeline: {
+      axisType: "category",
+      data: [], // Provide your timeline data here
+      currentIndex: 0,
+      controlPosition: "left",
+      autoPlay: false,
+      playInterval: 1000,
+      loop: false,
+      emphasis: {
+        controlStyle: {
+          color: "#0078d4",
+        },
+      },
+    },
     tooltip: {
       trigger: "axis",
     },
@@ -43,10 +61,10 @@ const Echart = ({ fId, littleMapId, timeSeries }) => {
       data: ["Search Engine", ...points.map((point) => point.title)],
     },
     grid: {
-      left: "3%",
+      left: "13%",
       right: "4%",
-      bottom: "3%",
-      containLabel: true,
+      bottom: "7%",
+      containLabel: false,
     },
     toolbox: {
       feature: {
@@ -58,26 +76,44 @@ const Echart = ({ fId, littleMapId, timeSeries }) => {
     xAxis: {
       type: "category",
       boundaryGap: false,
-      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      data: [
+        " شنبه",
+        "یکشنبه",
+        "دوشنبه",
+        "سه شنبه",
+        "چهارشنبه",
+        "پنچشنبه",
+        "جمعه",
+      ],
     },
     yAxis: {
       type: "value",
     },
     dataZoom: [
       {
-        show: true, // نمایش ابزار زوم
-        start: 0, // درصد شروع زوم
-        end: 100, // درصد پایان زوم
-        handleSize: "100%", // اندازه دسته زوم (تا 100% از نمودار)
+        show: true,
+        start: 0,
+        end: 100,
+        handleSize: "100%",
         handleStyle: {
           color: "#fff",
           shadowBlur: 3,
-          shadowColor: "rgba(0, 0, 0, 0.6)",
+          shadowColor: "rgba(44, 0, 0, 0.6)",
           shadowOffsetX: 2,
           shadowOffsetY: 2,
         },
         textStyle: {
-          color: "#fff",
+          color: "rgba(44, 0, 0, 0.6)",
+          fontSize: "22px",
+        },
+        emphasis: {
+          handleSize: 8,
+          textStyle: {
+            color: "red",
+          },
+          brushStyle: {
+            color: "rgba(255,255,255,0.1)",
+          },
         },
       },
       {
@@ -87,7 +123,6 @@ const Echart = ({ fId, littleMapId, timeSeries }) => {
         end: 70,
       },
     ],
-
     series: daynamictimeSeri,
   };
 
@@ -96,14 +131,17 @@ const Echart = ({ fId, littleMapId, timeSeries }) => {
       eChartsRef.current.getEchartsInstance().setOption(option);
     }
   }, [timeSeries, option]);
+
   console.log(timeSeries, "888");
+
   return (
     <ReactEcharts
       option={option}
-      style={{ height: "200px", width: "100%" }}
-      className="w-[300px]"
+      style={{ height: "330px", width: "70%" }}
+      className="w-screen"
       ref={eChartsRef}
     />
   );
 };
+
 export default Echart;
