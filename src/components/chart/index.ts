@@ -1,2 +1,2 @@
-import MyChartComponent from "./Chart";
-export default MyChartComponent;
+import Chrat from "./Chart";
+export default Chrat;

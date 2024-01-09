@@ -73,8 +73,10 @@ const LittleMap = ({ center, onIdNumberChange, centerId }) => {
       const pointStyle = new Style({
         image: new Circle({
           radius: 7,
-          fill: new Fill({ color: point.color }),
-          stroke: new Stroke({ color: "white", width: 1 }),
+          fill: new Fill({
+            color: centerId === point.id ? "red" : point.color,
+          }),
+          stroke: new Stroke({ color: "#808080", width: 1 }),
         }),
       });
 
